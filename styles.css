@@ -1,0 +1,2169 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --ink:#231A2E;
+  --night:#1B2340;
+  --dawn:#6B5B95;
+  --coral:#FF8F65;
+  --butter:#FFCE6B;
+  --paper:#FFF7EC;
+  --paper-dim:#F4EADA;
+  --line: rgba(35,26,46,0.12);
+  --radius: 18px;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:'Manrope', sans-serif;
+  color:var(--ink);
+  background: var(--paper);
+}
+
+body{
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -120px, rgba(255,206,107,0.35), transparent 60%),
+    linear-gradient(180deg, var(--night) 0%, var(--dawn) 30%, var(--coral) 62%, var(--butter) 100%);
+  background-attachment: fixed;
+  min-height:100vh;
+  padding: 0 0 16px 0;
+}
+
+.wrap{
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  padding: 56px 0 28px 0;
+  text-align:left;
+}
+
+.sun-stage{
+  position:relative;
+  height: 108px;
+  margin-bottom: 18px;
+  overflow:hidden;
+}
+
+.sun{
+  position:absolute;
+  left: 0;
+  bottom: -70px;
+  width: 92px;
+  height: 92px;
+  border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #FFE9B0, var(--butter) 55%, var(--coral) 100%);
+  box-shadow: 0 0 60px 10px rgba(255,206,107,0.45);
+  animation: rise 1.6s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes rise{
+  to{ bottom: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .sun{ animation: none; bottom: 6px; }
+}
+
+h1{
+  font-family:'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 2.85rem);
+  line-height: 1.08;
+  margin: 0 0 12px 0;
+  color: #FFF7EC;
+  text-wrap: balance;
+}
+
+.hero p{
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(255,247,236,0.88);
+  max-width: 48ch;
+  margin: 0;
+}
+
+/* ---------- TIME PICKER ---------- */
+.time-picker{
+  margin-top: 34px;
+}
+
+.time-picker .label{
+  font-size: 0.95rem;
+  color: rgba(255,247,236,0.82);
+  margin-bottom: 12px;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+}
+
+.chip{
+  font-family:'Manrope', sans-serif;
+  font-weight:700;
+  font-size: 0.98rem;
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255,247,236,0.55);
+  background: rgba(255,247,236,0.08);
+  color: #FFF7EC;
+  cursor:pointer;
+  transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
+}
+
+.chip:hover{ background: rgba(255,247,236,0.18); }
+.chip:active{ transform: scale(0.97); }
+
+.chip.active{
+  background: #FFF7EC;
+  color: var(--ink);
+  border-color: #FFF7EC;
+}
+
+.chip:focus-visible{
+  outline: 3px solid #fff;
+  outline-offset: 2px;
+}
+
+.surprise{
+  margin-top: 14px;
+  background:none;
+  border:none;
+  color: #FFF7EC;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family:'Manrope', sans-serif;
+  font-weight:600;
+  font-size:0.95rem;
+  cursor:pointer;
+  padding: 4px 0;
+}
+.surprise:hover{ opacity:0.85; }
+
+/* ---------- CARD (results panel) ---------- */
+.panel{
+  margin-top: 30px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(15,10,25,0.28);
+  overflow:hidden;
+}
+
+.panel-inner{
+  padding: 26px 24px 28px 24px;
+}
+
+.empty-state{
+  padding: 34px 24px;
+  color: rgba(35,26,46,0.65);
+  font-size: 0.98rem;
+  line-height:1.6;
+}
+
+.empty-state strong{
+  display:block;
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size:1.25rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.idea-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.idea-row{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  padding: 15px 24px;
+  border-top: 1px solid var(--line);
+  cursor:pointer;
+  background:none;
+  border-left:none; border-right:none; border-bottom:none;
+  width:100%;
+  text-align:left;
+  font-family:'Manrope', sans-serif;
+}
+.idea-item .idea-row{ border-top: none; }
+.idea-item + .idea-item,
+.almost-bar + .idea-item{ border-top: 1px solid var(--line); }
+
+.idea-row:hover{ background: var(--paper-dim); }
+
+.idea-mark{
+  flex:0 0 auto;
+  width: 34px; height:34px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.idea-mark svg{ width:18px; height:18px; }
+
+.idea-text{ flex:1; }
+.idea-name{ font-weight:700; font-size:1.02rem; color:var(--ink); }
+.idea-time{ font-size:0.87rem; color:rgba(35,26,46,0.55); margin-top:2px; }
+
+.chev{ flex:0 0 auto; opacity:0.4; }
+
+/* ---------- DETAIL VIEW ---------- */
+.detail-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.back-btn{
+  background:none;
+  border:none;
+  font-family:'Manrope', sans-serif;
+  font-weight:600;
+  font-size:0.9rem;
+  color: rgba(35,26,46,0.55);
+  cursor:pointer;
+  padding: 0 0 16px 0;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.back-btn:hover{ color: var(--ink); }
+
+.detail-title{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size: 1.6rem;
+  margin: 0 0 4px 0;
+}
+
+.detail-sub{
+  font-size:0.92rem;
+  color: rgba(35,26,46,0.6);
+  margin-bottom: 18px;
+}
+
+.steps{
+  list-style:none;
+  margin: 0 0 22px 0;
+  padding:0;
+  counter-reset: step;
+}
+
+.step{
+  counter-increment: step;
+  display:flex;
+  align-items:flex-start;
+  gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+}
+.steps li:first-child{ border-top:none; }
+
+.step-num{
+  flex:0 0 auto;
+  width: 24px; height:24px;
+  border-radius:50%;
+  border: 1.5px solid rgba(35,26,46,0.3);
+  font-size: 0.78rem;
+  font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  margin-top:1px;
+  transition: all 0.15s ease;
+}
+.step-num::before{ content: counter(step); }
+
+.step.done .step-num{
+  background: var(--coral);
+  border-color: var(--coral);
+  color:#fff;
+}
+.step.done .step-text{
+  text-decoration: line-through;
+  color: rgba(35,26,46,0.4);
+}
+
+.step-text{
+  font-size: 0.97rem;
+  line-height:1.5;
+  padding-top:1px;
+}
+
+/* ---------- TIMER ---------- */
+.timer-box{
+  border-radius: 14px;
+  background: var(--paper-dim);
+  padding: 18px 20px;
+  text-align:center;
+}
+
+.timer-clock{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size: 2.6rem;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 10px;
+}
+
+.timer-track{
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(35,26,46,0.1);
+  overflow:hidden;
+  margin-bottom: 16px;
+}
+
+.timer-fill{
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background: linear-gradient(90deg, var(--night), var(--dawn), var(--coral), var(--butter));
+  transition: width 1s linear;
+}
+
+.timer-btn{
+  font-family:'Manrope', sans-serif;
+  font-weight:700;
+  font-size: 0.98rem;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border:none;
+  cursor:pointer;
+  background: var(--ink);
+  color: var(--paper);
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+.timer-btn:hover{ opacity:0.88; }
+.timer-btn:active{ transform: scale(0.97); }
+.timer-btn:focus-visible{ outline: 3px solid var(--coral); outline-offset:2px; }
+
+.timer-btn.ghost{
+  background:none;
+  border: 1.5px solid rgba(35,26,46,0.3);
+  color: var(--ink);
+  margin-left: 8px;
+}
+
+.timer-done{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  font-size: 1.3rem;
+  color: var(--coral);
+}
+
+/* ---------- PREP TONIGHT ---------- */
+.prep{
+  margin-top: 22px;
+  background: rgba(255,247,236,0.94);
+  border-radius: var(--radius);
+  overflow:hidden;
+}
+
+.prep-toggle{
+  width:100%;
+  background:none;
+  border:none;
+  padding: 20px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  font-family:'Manrope', sans-serif;
+}
+
+.prep-toggle-text{ text-align:left; }
+.prep-toggle-title{ font-weight:700; font-size:1rem; color:var(--ink); }
+.prep-toggle-sub{ font-size:0.85rem; color:rgba(35,26,46,0.55); margin-top:2px; }
+
+.prep-arrow{
+  transition: transform 0.2s ease;
+  flex:0 0 auto;
+}
+.prep-arrow.open{ transform: rotate(180deg); }
+
+.prep-body{
+  max-height:0;
+  overflow:hidden;
+  transition: max-height 0.25s ease;
+}
+.prep-body.open{ max-height: 500px; }
+
+.prep-list{
+  list-style:none;
+  margin:0;
+  padding: 0 24px 22px 24px;
+}
+
+.prep-item{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  cursor:pointer;
+}
+.prep-list li:first-child{ border-top:none; }
+
+.prep-box{
+  flex:0 0 auto;
+  width: 20px; height: 20px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(35,26,46,0.35);
+  display:flex; align-items:center; justify-content:center;
+}
+.prep-box svg{ width:12px; height:12px; opacity:0; transition:opacity 0.1s ease; }
+.prep-item.checked .prep-box{ background: var(--dawn); border-color:var(--dawn); }
+.prep-item.checked .prep-box svg{ opacity:1; }
+.prep-item.checked .prep-text{ text-decoration:line-through; color:rgba(35,26,46,0.4); }
+
+.prep-text{ font-size:0.95rem; }
+
+.sr-only{
+  position:absolute; width:1px;height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* ---------- ADD BREAKFAST ---------- */
+.add-btn{
+  display:block;
+  width:100%;
+  background:none;
+  border:none;
+  border-top: 1px solid var(--line);
+  padding: 16px 24px;
+  text-align:left;
+  font-family:'Manrope', sans-serif;
+  font-weight:700;
+  font-size:0.98rem;
+  color: var(--dawn);
+  cursor:pointer;
+}
+.add-btn:hover{ background: var(--paper-dim); }
+
+.add-form .field{ margin-bottom: 16px; }
+
+.add-form label{
+  display:block;
+  font-weight:700;
+  font-size:0.9rem;
+  margin-bottom: 6px;
+}
+
+.add-form input,
+.add-form textarea{
+  width:100%;
+  font-family:'Manrope', sans-serif;
+  font-size:1rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(35,26,46,0.3);
+  background:#fff;
+  color: var(--ink);
+}
+
+.add-form input[aria-invalid="true"],
+.add-form textarea[aria-invalid="true"]{
+  border-color: #B3261E;
+}
+
+.field-error{
+  margin-top: 6px;
+  font-size: 0.88rem;
+  color: #B3261E;
+}
+
+.delete-btn{
+  margin-top: 18px;
+  background:none;
+  border:none;
+  font-family:'Manrope', sans-serif;
+  font-weight:600;
+  font-size:0.9rem;
+  color:#B3261E;
+  text-decoration: underline;
+  cursor:pointer;
+  padding: 4px 0;
+}
+
+/* ---------- FILTERS ---------- */
+.tag-picker{
+  border: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+.tag-picker legend{
+  font-weight:700;
+  font-size:0.9rem;
+  padding: 0;
+  margin-bottom: 6px;
+}
+
+.add-form .tag-option{
+  display:inline-flex;
+  align-items:center;
+  gap: 6px;
+  margin: 0 14px 8px 0;
+  font-weight:500;
+  font-size:0.95rem;
+  cursor:pointer;
+}
+
+.add-form .tag-option input{
+  width:18px;
+  height:18px;
+  padding:0;
+}
+
+/* ---------- COMPACT TOP: every choice visible on one screen ---------- */
+.hero{ padding: 18px 0 8px 0; }
+
+.hero-top{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+}
+
+.sun-stage{
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  margin: 0;
+  border-radius: 50%;
+}
+
+.sun{
+  left: 0;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 0 28px 4px rgba(255,206,107,0.45);
+}
+
+@keyframes rise{
+  from{ bottom: -60px; }
+  to{ bottom: 0; }
+}
+
+h1{
+  font-size: clamp(1.35rem, 5.2vw, 2rem);
+  margin: 0;
+}
+
+.time-picker{ margin-top: 16px; }
+
+.time-picker .label{
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.time-picker .filter-label{ margin-top: 16px; }
+
+.chips{ gap: 8px; }
+
+.chip,
+.chip.small{
+  font-size: 1rem;
+  min-height: 48px;
+  padding: 10px 16px;
+}
+
+.surprise{
+  margin-top: 14px;
+  min-height: 48px;
+  font-size: 1rem;
+  padding: 10px 4px;
+}
+
+.panel{ margin-top: 12px; }
+
+.sun-stage{ overflow: visible; }
+
+.sun{
+  position: static;
+  animation: none;
+}
+
+/* ---------- SCREENS: home / results / detail / add ---------- */
+body[data-screen]:not([data-screen="home"]) .hero,
+body[data-screen]:not([data-screen="home"]) .prep{ display:none; }
+
+body[data-screen="home"] .panel{ display:none; }
+
+body:not([data-screen="home"]) .wrap{ padding-top: 16px; }
+
+.home-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 4px 20px;
+}
+
+.back-btn{
+  min-height: 48px;
+  font-size: 1rem;
+  padding: 0 12px 0 0;
+}
+
+.results-summary{
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 12px 0;
+}
+
+.idea-row{ min-height: 72px; }
+
+.panel-inner > .idea-list{ margin: 0 -24px; }
+
+.pager{ margin-top: 10px; }
+
+.pager-buttons{
+  display:flex;
+  gap: 10px;
+}
+
+.pager-btn{
+  flex: 1;
+  min-height: 52px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: none;
+  background: var(--ink);
+  color: var(--paper);
+  font-family:'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor:pointer;
+}
+
+.pager-btn:disabled{
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pager-status{
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align:center;
+  margin-bottom: 8px;
+}
+
+/* Tighter rows and spacing so more fit on one page */
+.home-actions .surprise{ margin-top: 0; }
+
+.idea-row{ padding-top: 10px; padding-bottom: 10px; }
+
+body[data-screen="results"] .panel-inner{ padding: 8px 24px 16px; }
+
+body[data-screen="results"] .results-summary{ margin-bottom: 8px; }
+
+/* ---------- The student's own breakfasts ---------- */
+.idea-row.custom{
+  background: rgba(107,91,149,0.1);
+  box-shadow: inset 5px 0 0 var(--dawn);
+}
+
+.idea-row.custom:hover{ background: rgba(107,91,149,0.18); }
+
+.badge{
+  display:inline-block;
+  margin-left: 8px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--dawn);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  vertical-align: middle;
+}
+
+/* ---------- Save buttons and the delete window ---------- */
+.form-actions{
+  display:flex;
+  gap: 10px;
+}
+
+.form-actions .timer-btn{
+  flex: 1 1 0;
+  min-height: 52px;
+  margin: 0;
+  padding: 10px 8px;
+}
+
+.modal-backdrop{
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 20px;
+  background: rgba(15,10,25,0.55);
+}
+
+.modal{
+  width: 100%;
+  max-width: 360px;
+  background: var(--paper);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(15,10,25,0.4);
+}
+
+.modal-title{
+  font-family:'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+
+.modal-body{
+  color: rgba(35,26,46,0.7);
+  margin-bottom: 20px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap: 10px;
+}
+
+.modal-buttons .timer-btn{
+  flex: 1;
+  min-height: 52px;
+  margin: 0;
+}
+
+.timer-btn.danger{ background: #B3261E; }
+
+/* ---------- Toast: small message floating at the top ---------- */
+.toast{
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translate(-50%, var(--drag-y, 0px));
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  z-index: 20;
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  width: calc(100% - 32px);
+  max-width: 420px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--butter);
+  color: var(--ink);
+  border: 2px solid var(--paper);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.35;
+  box-shadow: 0 12px 32px rgba(15,10,25,0.35);
+  animation: toast-in 0.2s ease-out;
+}
+
+.toast[hidden]{ display:none; }
+
+.toast span{ flex: 1; overflow-wrap: anywhere; }
+
+.toast-close{
+  display:none;
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(35,26,46,0.12);
+  color: var(--ink);
+  font-size: 1.4rem;
+  cursor:pointer;
+}
+
+.toast.sticky .toast-close{ display:block; }
+
+@keyframes toast-in{
+  from{ opacity: 0; transform: translate(-50%, -12px); }
+  to{ opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .toast{ animation: none; }
+}
+
+
+/* ---------- Kitchen screen and ingredient pickers ---------- */
+.chip.active::before{ content: '\2713\00a0'; }
+
+.tag-label{ margin-top: 14px; }
+
+.panel .chip{
+  border-color: rgba(35,26,46,0.35);
+  background: transparent;
+  color: var(--ink);
+}
+
+.panel .chip:hover{ background: var(--paper-dim); }
+
+.panel .chip.active{
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.ingredient-group-title{
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 16px 0 8px 0;
+  color: rgba(35,26,46,0.7);
+}
+
+
+.timer-btn:disabled{
+  opacity: 0.35;
+  cursor: default;
+}
+
+.ingredient-picker{
+  border: 1.5px solid rgba(35,26,46,0.2);
+  border-radius: 12px;
+  padding: 4px 14px 14px 14px;
+  margin-bottom: 16px;
+}
+
+.ingredient-picker summary{
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  min-height: 44px;
+  display:flex;
+  align-items:center;
+}
+
+/* Keep the whole home screen, including the prep card, on one phone screen */
+body[data-screen="home"] .hero{ padding-top: 10px; }
+
+.sun-stage,
+.sun{
+  width: 48px;
+  height: 48px;
+}
+
+.tag-label{ margin-top: 10px; }
+
+.prep{ margin-top: 10px; }
+
+.prep-toggle{ padding: 12px 24px; }
+
+body{ padding-bottom: 8px; }
+
+/* ---------- Your kitchen, shown on top of the results ---------- */
+.kitchen-summary{
+  display:flex;
+  align-items:flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 8px 8px 8px 14px;
+  border-radius: 12px;
+  background: var(--paper-dim);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.kitchen-summary-text{
+  flex: 1;
+  padding-top: 8px;
+}
+
+.link-btn{
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 10px;
+  border: none;
+  background: none;
+  font-family:'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--dawn);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ---------- Kinds under an ingredient (sea salt, oat milk, ...) ---------- */
+.kitchen-item{ display: contents; }
+
+.kinds-row{
+  flex: 0 0 100%;
+  margin: 4px 0 6px 0;
+  padding: 10px 12px 12px 12px;
+  border-left: 4px solid var(--dawn);
+  border-radius: 0 12px 12px 0;
+  background: var(--paper-dim);
+}
+
+.kinds-row[hidden]{ display: none; }
+
+.kinds-label{
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.small-chip{ font-size: 0.95rem; }
+
+/* inside a kitchen group, wrapped items sit in the same wrapping row as the chips */
+.ingredient-chips{ align-items: flex-start; }
+
+/* ---------- What you'll need, on a breakfast's page ---------- */
+.needs-box{
+  margin: 0 0 18px 0;
+  border: 1.5px solid rgba(35,26,46,0.2);
+  border-radius: 12px;
+  padding: 0 14px;
+}
+
+.needs-box summary{
+  min-height: 48px;
+  display:flex;
+  align-items:center;
+  font-weight: 700;
+  font-size: 0.97rem;
+  cursor: pointer;
+}
+
+.needs-box[open]{ padding-bottom: 10px; }
+
+.needs-title{
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: 8px 0 4px 0;
+  color: rgba(35,26,46,0.65);
+}
+
+.needs-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.needs-list li{
+  padding: 4px 0;
+  font-size: 0.97rem;
+}
+
+.needs-list li.missing{
+  color: #B3261E;
+  font-weight: 600;
+}
+
+/* ---------- Cooking basics: their own color ---------- */
+.ingredient-group.basics{
+  margin-top: 18px;
+  padding: 4px 14px 14px 14px;
+  border-left: 6px solid var(--coral);
+  border-radius: 0 14px 14px 0;
+  background: rgba(255,206,107,0.28);
+}
+
+.ingredient-group.basics .ingredient-group-title{
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.ingredient-group-note{
+  margin: -4px 0 10px 0;
+  font-size: 0.93rem;
+  line-height: 1.45;
+  color: rgba(35,26,46,0.8);
+}
+
+.panel .ingredient-group.basics .chip{
+  background: #fff;
+  border-color: rgba(35,26,46,0.35);
+}
+
+.panel .ingredient-group.basics .chip.active{
+  background: var(--coral);
+  border-color: var(--coral);
+  color: var(--ink);
+}
+
+.ingredient-group.basics .kinds-row{
+  background: var(--paper);
+  border-left-color: var(--coral);
+}
+
+.needs-list.basics{
+  border-left: 4px solid var(--coral);
+  padding-left: 10px;
+}
+
+/* ---------- Kitchen buttons stay at the bottom of the screen ---------- */
+.kitchen-actions{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: 10px 0 calc(12px + env(safe-area-inset-bottom));
+  background: var(--paper);
+  box-shadow: 0 -6px 18px rgba(15,10,25,0.18);
+}
+
+.kitchen-count{
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--dawn);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.kitchen-actions .form-actions{
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.kitchen-actions .timer-btn{
+  font-size: 1rem;
+}
+
+/* Clear all: the page's purple. Show what I can make: the page's coral. */
+.kitchen-actions .timer-btn.ghost{
+  background: var(--dawn);
+  border: none;
+  color: var(--paper);
+}
+
+.kitchen-actions .timer-btn:not(.ghost){
+  background: var(--coral);
+  color: var(--ink);
+}
+
+body[data-screen="kitchen"] .panel-inner{ padding-bottom: 130px; }
+
+
+/* ---------- Settings gear and window ---------- */
+.settings-btn{
+  flex: 0 0 auto;
+  margin-left: auto;
+  width: 48px;
+  height: 48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,247,236,0.55);
+  background: rgba(255,247,236,0.12);
+  color: #FFF7EC;
+  cursor: pointer;
+}
+
+.settings-btn:hover{ background: rgba(255,247,236,0.25); }
+
+.settings-btn.in-panel{
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  border-color: rgba(35,26,46,0.25);
+  background: var(--paper-dim);
+  color: var(--ink);
+}
+
+.panel{ position: relative; }
+
+.settings-heading{
+  font-weight: 800;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.settings-option{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 2px solid rgba(35,26,46,0.25);
+  background: #fff;
+  color: var(--ink);
+  font-family:'Manrope', sans-serif;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-option strong{ font-size: 1rem; }
+
+.settings-option.active{
+  border-color: var(--coral);
+  background: rgba(255,206,107,0.35);
+}
+
+.settings-option.active strong::before{ content: '\2713\00a0'; }
+
+.settings-done{
+  width: 100%;
+  min-height: 52px;
+  margin: 6px 0 0 0;
+}
+
+/* The gear shares the title row, so the title is a little smaller to stay on two lines */
+h1{ font-size: clamp(1.15rem, 4.8vw, 2rem); }
+
+/* The settings gear only appears on the home screen and in My kitchen */
+body:not([data-screen="kitchen"]) .settings-btn.in-panel{ display: none; }
+
+/* ---------- "Almost there": breakfasts missing one ingredient ---------- */
+.almost-bar{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  width: 100%;
+  min-height: 60px;
+  margin: 0;
+  padding: 10px 24px;
+  border: none;
+  border-top: 1px solid var(--line);
+  background: var(--dawn);
+  color: var(--paper);
+  font-family:'Manrope', sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.almost-bar-text{
+  flex: 1;
+  display:flex;
+  flex-direction:column;
+  gap: 2px;
+  line-height: 1.3;
+}
+
+.almost-bar strong{ font-size: 1.05rem; }
+
+.almost-bar-text span{ font-size: 0.88rem; opacity: 0.92; }
+
+.almost-arrow{
+  flex: 0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,247,236,0.18);
+  transition: transform 0.2s ease;
+}
+
+.almost-bar[aria-expanded="true"] .almost-arrow{ transform: rotate(180deg); }
+
+.almost-bar:focus-visible{ outline: 3px solid var(--coral); outline-offset: -3px; }
+
+/* Breakfasts you can almost make look different from the ones you can make now */
+.idea-row.almost{
+  background: rgba(255,206,107,0.22);
+  box-shadow: inset 5px 0 0 var(--coral);
+}
+
+.idea-row.almost:hover{ background: rgba(255,206,107,0.38); }
+
+.idea-row.almost.custom{ box-shadow: inset 5px 0 0 var(--coral), inset 10px 0 0 var(--dawn); }
+
+.missing-note{
+  display:inline-block;
+  margin-top: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(255,143,101,0.3);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+/* ---------- Favorites: the heart ---------- */
+.idea-item{ position: relative; }
+
+.idea-item .chev{ margin-right: 46px; }
+
+.heart-btn{
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.heart-btn svg{
+  fill: none;
+  stroke: var(--ink);
+  opacity: 0.55;
+}
+
+.heart-btn.on svg{
+  fill: var(--coral);
+  stroke: #C4482A;
+  opacity: 1;
+}
+
+.heart-btn:hover{ background: var(--paper-dim); }
+
+.heart-btn.in-list{
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}
+
+.heart-btn.in-detail{ margin: -4px -8px 0 0; }
+
+/* ---------- Favorites chip at the top of the home screen ---------- */
+.favorites-row{ margin-bottom: 6px; }
+
+.chip.favorites-chip{ border-color: var(--coral); }
+
+/* ---------- The floating message follows the finger and slides away ---------- */
+.toast{ padding-bottom: 20px; }
+
+.toast.dragging{ transition: none; cursor: grabbing; }
+
+.toast.leaving{
+  transform: translate(-50%, -170%);
+  opacity: 0;
+}
+
+/* a small handle that hints the message can be swiped up */
+.toast::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  width: 36px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(35,26,46,0.35);
+  transform: translateX(-50%);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .toast{ transition: none; }
+}
+
+/* ---------- Home: one big button at the bottom ---------- */
+.home-bar{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: 10px 0 calc(12px + env(safe-area-inset-bottom));
+  background: var(--paper);
+  box-shadow: 0 -6px 18px rgba(15,10,25,0.18);
+}
+
+.home-bar-inner{
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+body:not([data-screen="home"]) .home-bar{ display: none; }
+
+body[data-screen="home"] .wrap{ padding-bottom: 96px; }
+
+.show-btn{
+  width: 100%;
+  min-height: 60px;
+  border: none;
+  border-radius: 16px;
+  background: var(--coral);
+  color: var(--ink);
+  font-family:'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255,143,101,0.45);
+}
+
+.show-btn:active{ transform: scale(0.98); }
+
+.show-btn:focus-visible{ outline: 3px solid var(--ink); outline-offset: 3px; }
+
+/* ---------- Results: the minutes row ---------- */
+.minutes-picker{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  margin: 0 0 8px 0;
+}
+
+.minutes-label{
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  white-space: pre-line;
+}
+
+.minutes-chips{
+  flex: 1;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.minutes-chips .chip{
+  flex: 1 1 0;
+  min-width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  justify-content: center;
+  text-align: center;
+}
+
+/* The narrow minutes chips show their selection with the dark fill only; a checkmark would not fit */
+.minutes-chips .chip.active::before{ content: none; }
+
+/* ---------- Home: a prettier "Show breakfasts" bar, in the sunrise colors ---------- */
+.home-bar{
+  padding: 30px 0 calc(14px + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(ellipse 75% 70px at 50% 100%, rgba(255,143,101,0.4), transparent 72%),
+    linear-gradient(180deg, rgba(255,247,236,0) 0%, rgba(255,247,236,0.92) 45%, var(--paper) 100%);
+  box-shadow: none;
+  pointer-events: none; /* the soft fade at the top never blocks taps on what is behind it */
+}
+
+body[data-screen="home"] .wrap{ padding-bottom: 108px; }
+
+.show-btn{
+  pointer-events: auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 12px;
+  background: linear-gradient(100deg, var(--butter) 0%, #FFB566 42%, var(--coral) 100%);
+  box-shadow:
+    0 8px 22px rgba(255,143,101,0.55),
+    inset 0 1.5px 0 rgba(255,255,255,0.75),
+    inset 0 -3px 0 rgba(196,72,42,0.18);
+}
+
+/* a small rising sun beside the words */
+.show-btn::before{
+  content: '';
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #FFF6D6, #FFE08A 55%, #FFB86B 100%);
+  box-shadow: 0 0 10px 2px rgba(255,255,255,0.75);
+}
+
+/* ---------- "My kitchen": its own card on the home screen, not a filter chip ---------- */
+.kitchen-card{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  width: 100%;
+  min-height: 64px;
+  margin: 16px 0 6px 0;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family:'Manrope', sans-serif;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(27,35,64,0.28);
+}
+
+.kitchen-card:active{ transform: scale(0.99); }
+
+.kitchen-card-icon{
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 50%;
+  background: rgba(255,206,107,0.55);
+}
+
+.kitchen-card-text{
+  flex: 1;
+  display:flex;
+  flex-direction:column;
+  gap: 1px;
+  line-height: 1.3;
+}
+
+.kitchen-card-text strong{ font-size: 1.05rem; }
+
+.kitchen-card-text span{ font-size: 0.9rem; color: rgba(35,26,46,0.7); }
+
+.kitchen-card-arrow{ flex: 0 0 auto; opacity: 0.5; }
+
+/* ---------- "My kitchen" card with its on/off switch, joined in one box ---------- */
+.kitchen-box{
+  margin: 14px 0 4px 0;
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: 0 6px 16px rgba(27,35,64,0.28);
+  overflow: hidden;
+}
+
+.kitchen-box .kitchen-card{
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+}
+
+.kitchen-switch{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 16px;
+  border: none;
+  border-top: 1px solid var(--line);
+  background: rgba(255,206,107,0.18);
+  color: var(--ink);
+  font-family:'Manrope', sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.kitchen-switch-text{
+  flex: 1;
+  display:flex;
+  flex-direction:column;
+  gap: 1px;
+  line-height: 1.3;
+}
+
+.kitchen-switch-text strong{ font-size: 1rem; }
+
+.kitchen-switch-text span{ font-size: 0.85rem; color: rgba(35,26,46,0.7); }
+
+.switch-track{
+  flex: 0 0 auto;
+  position: relative;
+  width: 56px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(35,26,46,0.28);
+  transition: background 0.2s ease;
+}
+
+.switch-knob{
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(15,10,25,0.35);
+  transition: transform 0.2s ease;
+}
+
+.kitchen-switch.on .switch-track{ background: var(--coral); }
+
+.kitchen-switch.on .switch-knob{ transform: translateX(24px); }
+
+.kitchen-switch:focus-visible{ outline: 3px solid var(--coral); outline-offset: -3px; }
+
+@media (prefers-reduced-motion: reduce){
+  .switch-track, .switch-knob{ transition: none; }
+}
+
+/* ---------- Set up tonight: clear progress on one line ---------- */
+.prep-toggle-text{ flex: 1; }
+
+.prep-toggle-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+
+.prep-segments{
+  display:flex;
+  gap: 4px;
+}
+
+.prep-segment{
+  width: 20px;
+  height: 16px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(35,26,46,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 10px;
+  font-weight: 800;
+  color: rgba(35,26,46,0.6);
+}
+
+.prep-segment.done{
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #fff;
+}
+
+
+.prep-toggle-sub{
+  display:block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+  white-space: nowrap; /* done and left stay together on one line */
+}
+
+.prep-done-text{ color: #A8381C; font-weight: 800; }
+
+.prep-left-text{ color: rgba(35,26,46,0.65); font-weight: 600; }
+
+.prep-intro{
+  margin: 0;
+  padding: 0 24px 6px 24px;
+  font-size: 0.9rem;
+  color: rgba(35,26,46,0.7);
+}
+
+/* The list's boxes match the bar: numbered until done, then a coral tick */
+.prep-box{
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(35,26,46,0.6);
+}
+
+.prep-item.checked .prep-box{
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.prep-item.checked .prep-box svg{ opacity: 1; }
+
+/* ---------- Choosing the Set up tonight tasks ---------- */
+.prep-body.open{ max-height: 4000px; }
+
+.prep-empty{ padding: 10px 0; font-size: 0.95rem; color: rgba(35,26,46,0.7); }
+
+.prep-choose{
+  display:block;
+  width: calc(100% - 48px);
+  min-height: 48px;
+  margin: 4px 24px 16px 24px;
+  border: 2px solid var(--dawn);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--dawn);
+  font-family:'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.prep-choose:hover{ background: rgba(107,91,149,0.1); }
+
+/* with many tasks the bar has too little room per box for numbers: it shows the fill only */
+.prep-segments{ max-width: 116px; min-width: 0; }
+
+.prep-segment{
+  flex: 1 1 20px;
+  width: auto;
+  min-width: 0;
+  max-width: 20px;
+}
+
+.prep-segments.compact{ gap: 2px; }
+
+.prep-segments.compact .prep-segment{ font-size: 0; }
+
+.task-option{
+  display:flex;
+  align-items:flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 4px;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: var(--ink);
+  font-family:'Manrope', sans-serif;
+  font-size: 0.97rem;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.task-option:hover{ background: var(--paper-dim); }
+
+.task-box{
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 7px;
+  border: 1.5px solid rgba(35,26,46,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.task-option.on .task-box{
+  background: var(--coral);
+  border-color: var(--coral);
+}
+
+.task-text{ flex: 1; }
+
+.own-task-row{
+  display:flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.own-task-form input{
+  flex: 1;
+  min-width: 0;
+  font-family:'Manrope', sans-serif;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(35,26,46,0.3);
+  background: #fff;
+  color: var(--ink);
+}
+
+.own-task-form input[aria-invalid="true"]{ border-color: #B3261E; }
+
+.own-task-form .timer-btn{
+  min-height: 48px;
+  margin: 0;
+  padding: 0 22px;
+}
+
+body[data-screen="tasks"] .panel-inner{ padding-bottom: 130px; }
+
+/* a long word with no spaces wraps instead of running off the edge */
+.task-text,
+.prep-text{ overflow-wrap: anywhere; }
+
+/* ---------- Easier to read: short lines, a small picture, one highlighted key word ---------- */
+.task-icon{
+  flex: 0 0 auto;
+  width: 30px;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.prep-item .task-icon{ align-self: center; }
+
+/* the key word looks like it was marked with a highlighter */
+.prep-text strong,
+.task-text strong{
+  font-weight: 800;
+  background: linear-gradient(transparent 52%, rgba(255,206,107,0.85) 52%);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.prep-text{ font-size: 1.05rem; line-height: 1.35; }
+
+.task-option{ font-size: 1.05rem; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+
+.task-detail{
+  display:block;
+  margin-top: 3px;
+  font-size: 0.88rem;
+  color: rgba(35,26,46,0.68);
+}
+
+.task-group-title{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  margin-top: 22px;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.task-group-title .task-icon{ width: auto; font-size: 1.2rem; }
+
+.prep-item{ padding-top: 12px; padding-bottom: 12px; }
+
+/* ---------- My own lines: tapping ticks, a separate Remove button deletes ---------- */
+.task-row{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.task-row .task-option{
+  flex: 1;
+  min-width: 0;
+  border-bottom: none;
+}
+
+.task-remove-btn{
+  flex: 0 0 auto;
+  min-width: 80px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid #B3261E;
+  border-radius: 999px;
+  background: transparent;
+  color: #B3261E;
+  font-family:'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.task-remove-btn:hover{ background: rgba(179,38,30,0.08); }
+
+.own-hint{
+  margin: -4px 0 6px 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: rgba(35,26,46,0.7);
+}
+
+/* ---------- A picture of your choice on your own lines ---------- */
+.icon-pick-btn{
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  border: 1.5px dashed rgba(107,91,149,0.55);
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.icon-pick-btn:hover{ background: var(--paper-dim); }
+
+.task-row{ padding-left: 0; }
+
+.icon-grid{
+  display:grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 4px 0 14px;
+}
+
+.icon-choice{
+  min-height: 46px;
+  font-size: 1.5rem;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: var(--paper-dim);
+  cursor: pointer;
+}
+
+.icon-choice.on{
+  border-color: var(--dawn);
+  background: rgba(255,206,107,0.45);
+}
+
+.icon-type-form input{
+  flex: 1;
+  min-width: 0;
+  font-family:'Manrope', sans-serif;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(35,26,46,0.3);
+  background: #fff;
+  color: var(--ink);
+}
+
+.icon-type-form input[aria-invalid="true"]{ border-color: #B3261E; }
+
+.icon-type-form .timer-btn{ min-height: 48px; margin: 0; padding: 0 20px; }
+
+/* ---------- Headings and arrow buttons (arrows are used on the home list) ---------- */
+.order-heading{
+  font-family:'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.order-btn{
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--dawn);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--dawn);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.order-btn:hover:not(:disabled){ background: rgba(255,206,107,0.45); }
+.order-btn:disabled{ opacity: 0.3; cursor: default; }
+
+
+/* ---------- My own lines come first, in a warm box ---------- */
+.own-tasks{
+  margin: 14px -6px 18px;
+  padding: 14px 10px 10px;
+  border-radius: 18px;
+  background: rgba(255,206,107,0.22);
+  border: 1.5px solid rgba(255,143,101,0.55);
+}
+
+.own-tasks .own-hint{ margin: 0 0 4px; }
+.own-tasks .own-task-row{ margin-top: 6px; margin-bottom: 8px; }
+.own-tasks .task-row:first-of-type{ border-top: 1px solid rgba(255,143,101,0.4); }
+
+/* ---------- Changing the order from the home page ---------- */
+.prep-actions{
+  display:flex;
+  gap: 10px;
+  margin: 4px 24px 16px 24px;
+}
+
+.prep-actions .prep-choose{
+  flex: 1;
+  width: auto;
+  margin: 0;
+  padding: 0 8px;
+}
+
+.prep-reorder.on{
+  background: var(--dawn);
+  color: #fff;
+}
+
+.prep-reorder.on:hover{ background: #5A4B84; }
+.prep-reorder:disabled{ opacity: 0.4; cursor: default; }
+
+.prep-order-hint{
+  margin: 0 24px 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(107,91,149,0.1);
+  border: 1.5px solid rgba(107,91,149,0.35);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.prep-item.ordering{ cursor: default; gap: 6px; }
+.prep-item.ordering .order-btn{ width: 42px; height: 42px; }
+.prep-item.ordering .prep-text{ flex: 1; min-width: 0; }
+
+/* ---------- The two buttons under the list look different: one adds lines, one moves them ---------- */
+.prep-actions .prep-choose{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  min-height: 52px;
+}
+
+/* Choose tasks: warm and filled, like the sun */
+.prep-actions #prepChooseBtn{
+  background: var(--butter);
+  border-color: #E8A93A;
+  color: var(--ink);
+}
+
+.prep-actions #prepChooseBtn:hover{ background: #FFC24F; }
+
+/* Change order: cool purple outline; solid purple while ordering */
+.prep-actions .prep-reorder{
+  background: #fff;
+  border-color: var(--dawn);
+  color: var(--dawn);
+}
+
+.prep-actions .prep-reorder:hover:not(:disabled){ background: rgba(107,91,149,0.12); }
+.prep-actions .prep-reorder.on{ background: var(--dawn); color: #fff; }
+
+.prep-actions .btn-icon{ font-size: 1.15rem; line-height: 1; }
+
+.prep-actions .prep-choose{ font-size: 0.9rem; gap: 6px; padding: 0 6px; }
+.prep-actions .btn-label{ white-space: nowrap; }
+.own-tasks + .order-heading{ margin-top: 6px; }
+
+/* ---------- Steps with a picture, a highlighted first word and a waiting time ---------- */
+.step{ align-items:center; gap: 10px; padding: 14px 0; }
+
+.step-icon{
+  flex: 0 0 auto;
+  width: 40px;
+  font-size: 1.9rem;
+  line-height: 1;
+  text-align: center;
+}
+
+.step-text{ flex: 1; min-width: 0; font-size: 1.05rem; line-height: 1.4; }
+
+/* the action word is highlighted like a marker pen, the same as in Set up tonight */
+.step-text strong{
+  font-weight: 800;
+  background: linear-gradient(transparent 52%, rgba(255,206,107,0.85) 52%);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* how long to wait, as a small purple tag under the words */
+.step-time{
+  display:inline-block;
+  margin: 6px 0 0 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(107,91,149,0.14);
+  border: 1.5px solid rgba(107,91,149,0.5);
+  color: #4F4175;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.step-text .step-time{ display:table; }
+
+.step.done .step-icon{ opacity: 0.4; filter: grayscale(0.6); }
+.step.done .step-text strong{ background: none; }
+.step.done .step-time{ opacity: 0.5; }
+
+/* ---------- Choosing a step's picture and highlighted words ---------- */
+.step-icon-btn{
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1.5px dashed rgba(107,91,149,0.55);
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.step-icon-btn:hover{ background: var(--paper-dim); }
+
+/* a picture the student chose gets a solid purple edge, so their own steps stand out */
+.step-icon-btn.mine{ border-style: solid; border-color: var(--dawn); background: rgba(107,91,149,0.08); }
+
+.modal.tall{ max-height: calc(100vh - 40px); overflow-y: auto; }
+
+.step-preview{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin: 8px 0 14px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1.5px solid rgba(35,26,46,0.12);
+}
+
+.step-preview .step-text{ font-size: 1.05rem; line-height: 1.4; }
+
+.edit-step-heading{
+  font-family:'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 14px 0 6px;
+}
+
+.word-chips{ display:flex; flex-wrap:wrap; gap: 8px; margin-bottom: 8px; }
+
+.word-chip{
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1.5px solid rgba(107,91,149,0.5);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-family:'Manrope', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.word-chip.on{
+  background: rgba(255,206,107,0.85);
+  border-color: #E8A93A;
+  font-weight: 800;
+}
+
+.word-chip:disabled{ opacity: 0.4; cursor: default; }
+
+.step-reset{
+  display:block;
+  margin: 14px auto 0;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  color: var(--dawn);
+  font-family:'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Two levels: the main words big, the extra words small underneath ---------- */
+.step-main{
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.step-extra{
+  display: block;
+  margin-top: 3px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgba(35,26,46,0.7);
+}
+
+/* the extra words start with a capital letter even when they continue the main words */
+.step-extra::first-letter{ text-transform: uppercase; }
+
+.step-text .step-time{ margin-top: 8px; }
+
+/* ---------- Instructions in two levels: one important thing big, the extra small underneath ---------- */
+.say{ margin: 0 0 14px; }
+
+.say-main{
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.say-small{
+  margin-top: 3px;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: rgba(35,26,46,0.7);
+}
+
+.prep-intro.say{ margin: 0; padding: 0 24px 8px 24px; }
+.prep-order-hint.say{ margin: 0 24px 10px; padding: 10px 12px; }
+.prep-order-hint.say .say-main{ font-size: 1.05rem; }
+.own-tasks .say{ margin: 0 0 4px; }
+.modal .say{ margin: 4px 0 10px; }
+
+/* ---------- A photo and a video on a step ---------- */
+.step-media{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.media-thumb{
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  border: 2px solid var(--dawn);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+}
+
+.media-thumb img{ width: 100%; height: 100%; object-fit: cover; display:block; }
+
+.media-chip{
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-family:'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Video: warm and filled, like the main buttons */
+.media-chip.play{
+  background: var(--butter);
+  border: 2px solid #E8A93A;
+  color: var(--ink);
+}
+
+/* Add or change: quiet, dashed purple like the picture box */
+.media-chip.edit{
+  background: transparent;
+  border: 1.5px dashed rgba(107,91,149,0.6);
+  color: var(--dawn);
+}
+
+.step.done .step-media{ opacity: 0.6; }
+
+.photo-box{ margin: 6px 0 10px; }
+.media-preview{ display:block; width: 100%; max-height: 220px; object-fit: contain; border-radius: 12px; background: #fff; }
+.media-big{ display:block; width: 100%; max-height: 70vh; object-fit: contain; border-radius: 12px; }
+.media-player{ display:block; width: 100%; aspect-ratio: 16 / 9; border: none; border-radius: 12px; background: #000; }
+
+.media-remove{
+  margin: 8px 0 0 10px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1.5px solid #B3261E;
+  border-radius: 999px;
+  background: transparent;
+  color: #B3261E;
+  font-family:'Manrope', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.media-open{ display:inline-block; margin: 0 0 10px; font-weight: 800; color: var(--dawn); }
+
+.modal input[type="url"]{
+  width: 100%;
+  box-sizing: border-box;
+  font-family:'Manrope', sans-serif;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(35,26,46,0.3);
+  background: #fff;
+  color: var(--ink);
+}
+
+.modal input[type="url"][aria-invalid="true"]{ border-color: #B3261E; }
+
+/* a photo of how to do the step: small, wide, under the words */
+.media-thumb{ width: 112px; height: 84px; }
+.photo-credit{ margin-top: 8px; }
+.photo-credit a{ color: var(--dawn); }
